@@ -10,6 +10,7 @@ Tested on two machines using:
  ------------------------ Setup ------------------------------
  
 ------------------------- Eclipse ----------------------------
+
 - The easiest way to start the project is to import it into 
 Eclipse EE IDE, setup Tomcat server within Eclipse and run
 from index.jsp file. 
@@ -22,44 +23,55 @@ localhost:8080/Astek/index.jsp. Port number should match one
 specified while setting up Tomcat server. 
 
 ------------------------- Tomcat ------------------------------
-- Second way of running, without using any IDE, requires
-downloading Apache Tomcat from: https://tomcat.apache.org/
-as well as Java JRE/JDK-11. After installing Apache Tomcat and
-specifying path to JRE or JDK, Astek.rar project folder has to
-be extracted to: /YourApacheInstallationFolder/Tomcat/webapps/
-Make sure that within .../Tomcat/lib folder there is 
+
+- Second way of running, without using any IDE:
+1) Download Apache Tomcat from: https://tomcat.apache.org/
+2) Install Java JRE/JDK-11. 
+3) Install Apache Tomcat and specify path to JRE or JDK. 
+4) Extract Astek.rar project folder to:
+/YourApacheInstallationFolder/Tomcat/webapps/
+5) Make sure that within .../Tomcat/lib folder there is 
 servlet-api.jar file present. It is required when building your
 app.
+6) Run Tomcat.exe server from Tomcat/bin folder
+7) Navigate in your browser to: localhost:8080/Astek or 
+localhost:8080/Astek/index.jsp.
+If site fails to load, check Tomcat command line for other port
+which might have been used by the server.
 
 - Because Tomcat requires specific folder and files organisation,
 Astek.rar is prepared webapp folder for this type of setup. 
 
 - When finished, simply run Tomcat server from Tomcat/bin folder
-and open the browser. Navigate to: localhost:8080/Astek or
-localhost:8080/Astek/index.jsp If site fails to load, check
-Tomcat command line for other port which might have been used by
-the server.
+and open the browser.
 
 ------------------------ Build --------------------------------
+
 - Astek.rar comes in built form, requiring only unzipping in 
 destination folder. If recompilation is required, source files
-are located in Astek/src folder.
+are located in Astek/src folder. Destination folder for
+complied classes is WEB-INF/classes/
 
-- Eclipse project should be built in a standard manner.
+- Eclipse project should be built in a standard manner. Simply
+run index.jsp inside the project.
 
 ------------------------ Tests JUNIT4--------------------------
+
 - Basic tests can be run from the IDE. Their task is to check
 basic performance of Class methods and ensure correct logic of
 operations.
 
 Servlets were tested manually on running Tomcat local server.
 
+
 ----------------------------------------------------------------
 ---------------------- Running Application ---------------------
+
 - Simple application for reimbursement calculations.
 
 
 ------------------------ New claim -----------------------------
+
 - Click "New claim" button to start calculating new claim or 
 "Admin Panel" in top right corner for administration tools.
 
@@ -88,6 +100,7 @@ It can reach to up maximum amount.
 button allows for reseting all the values to their defaults.
 
 --------------------------- Admin Panel --------------------------
+
 - To access Admin panel click the "Admin Panel" hyperlink. It will
 redirect to the login page and ask for password:
 
@@ -131,7 +144,8 @@ page.
 additional receipts/mileage/etc will still substract the amounts from
 given type.
 
--------------------------- Possible Improvements with JavaScript -----------------------
+-------------------------- Possible Improvements with JavaScript ------
+
 - Javascript functions to monitor user input into the field to check
 for correctness of the data and live update of the field. For
 example reimbursement value change when different amount of days are
