@@ -1,11 +1,12 @@
 # Astek
 Astek webapp task created by Mateusz Gawroński.
 
-This WebApp has been created using Eclipse IDE.
+This WebApp has been created with help of Eclipse IDE.
 Tested on two machines using:
 - Java JDK-11
 - Apache Tomcat ver. 9.0
 
+--------------------------------------------------------------
  ------------------------ Setup ------------------------------
  
 ------------------------- Eclipse ----------------------------
@@ -39,18 +40,21 @@ localhost:8080/Astek/index.jsp If site fails to load, check
 Tomcat command line for other port which might have been used by
 the server.
 
------------------------- Build ----------------------------------
+------------------------ Build --------------------------------
 - Astek.rar comes in built form, requiring only unzipping in 
 destination folder. If recompilation is required, source files
 are located in Astek/src folder.
 
 - Eclipse project should be built in a standard manner.
 
------------------------- Tests ----------------------------------
-- Test were run from IDE. It is the most convenient way
-to do it.
+------------------------ Tests JUNIT4--------------------------
+- Basic tests can be run from the IDE. Their task is to check
+basic performance of Class methods and ensure correct logic of
+operations.
 
+Servlets were tested manually on running Tomcat local server.
 
+----------------------------------------------------------------
 ---------------------- Running Application ---------------------
 - Simple application for reimbursement calculations.
 
@@ -127,7 +131,7 @@ page.
 additional receipts/mileage/etc will still substract the amounts from
 given type.
 
--------------------------- Possible Improvements -----------------------
+-------------------------- Possible Improvements with JavaScript -----------------------
 - Javascript functions to monitor user input into the field to check
 for correctness of the data and live update of the field. For
 example reimbursement value change when different amount of days are

@@ -20,6 +20,7 @@
 
 		<div class="centercontent">
 			<form action="ReceiptServlet" method="POST">
+				<input type="hidden" value="reset" name="reset">
 				<input type="submit" value="New claim">
 			</form>
 		</div>
