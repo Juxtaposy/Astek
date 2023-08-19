@@ -6,6 +6,9 @@ import org.junit.Test;
 
 import reimbursement.LoginBean;
 
+/**
+ * Tests for LoginBean - setting password and its validation through a method.
+ */
 public class LoginBeanTest {
 	LoginBean bean = new LoginBean();
 	

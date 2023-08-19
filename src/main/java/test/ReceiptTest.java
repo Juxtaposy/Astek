@@ -8,6 +8,9 @@ import java.math.RoundingMode;
 import org.junit.Test;
 import reimbursement.Receipt;
 
+/**
+ * Basic functionality tests for getters and setters and reset function.
+ */
 public class ReceiptTest {
 	int id = 0;
 	String name = "Test";
