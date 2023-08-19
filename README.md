@@ -39,6 +39,18 @@ localhost:8080/Astek/index.jsp If site fails to load, check
 Tomcat command line for other port which might have been used by
 the server.
 
+------------------------ Build ----------------------------------
+- Astek.rar comes in built form, requiring only unzipping in 
+destination folder. If recompilation is required, source files
+are located in Astek/src folder.
+
+- Eclipse project should be built in a standard manner.
+
+------------------------ Tests ----------------------------------
+- Test were run from IDE. It is the most convinient way
+to do it.
+
+
 ---------------------- Running Application ---------------------
 - Simple application for reimbursement calculations.
 
