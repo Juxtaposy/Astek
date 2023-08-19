@@ -47,7 +47,7 @@ are located in Astek/src folder.
 - Eclipse project should be built in a standard manner.
 
 ------------------------ Tests ----------------------------------
-- Test were run from IDE. It is the most convinient way
+- Test were run from IDE. It is the most convenient way
 to do it.
 
 
@@ -56,7 +56,7 @@ to do it.
 
 
 ------------------------ New claim -----------------------------
-- Click "New claim" button to start calculatin new claim or 
+- Click "New claim" button to start calculating new claim or 
 "Admin Panel" in top right corner for administration tools.
 
 - Trip date has to be specified in order for daily allowance 
@@ -69,8 +69,8 @@ drop down menu which shows type of receipt and maximum
 reimbursement available for given type. Entering receipt value 
 will add the amount to the sum up to maximum specified.
 
-- Daily allowance is limited by the trip duration spefied by
-trip date. Maximum number of days is which is consdered
+- Daily allowance is limited by the trip duration specified by
+trip date. Maximum number of days is which is considered
 ranged from: End-Start + 1. Reimbursement is multiplication of
 daily allowance x number of days.
 
@@ -127,5 +127,11 @@ page.
 additional receipts/mileage/etc will still substract the amounts from
 given type.
 
-- User can add multiple daily allowances one after another until the 
-limit is reached. 
+-------------------------- Possible Improvements -----------------------
+- Javascript functions to monitor user input into the field to check
+for correctness of the data and live update of the field. For
+example reimbursement value change when different amount of days are
+selected. 
+
+- Script to enforce data selection in order to allow input into other
+fields.

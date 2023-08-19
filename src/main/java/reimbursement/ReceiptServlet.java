@@ -5,6 +5,8 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -49,16 +51,16 @@ public class ReceiptServlet extends HttpServlet {
 		 String dateEnd = dates[1];
 		 
 		 // Calculate the length of the trip in days
-		 long diffInDays = dayCalc(request, dates);
+		 long diffInDays = dayCalc(request, dates);	 
 		 
 		 // Calculate daily allowance based on the number of days
-		 BigDecimal calculatedAllowance = calculateAllowance(request, reimbursementList, diffInDays);
+		 BigDecimal[] calculatedAllowance = calculateAllowance(request, reimbursementList, diffInDays);
 		 
 		// Calculate mileage based on the distance
 		 BigDecimal calculatedDistance = calculateMileage(request, reimbursementList);
 		 
 		 // Update total sum of reimbursement
-		 BigDecimal reimbursementSum = updateSum(request, receiptValue, calculatedAllowance,
+		 BigDecimal reimbursementSum = updateSum(request, receiptValue, calculatedAllowance[0],
 				 calculatedDistance, reimbursementList);
 		 
 		 // Reset functionality
@@ -75,12 +77,12 @@ public class ReceiptServlet extends HttpServlet {
 		 request.setAttribute("reimbursementList", reimbursementList);
 		 request.setAttribute("inputDateStart", dateStart);
 		 request.setAttribute("inputDateEnd", dateEnd);
-		 
+		 request.setAttribute("spentSum", calculatedAllowance[1]);
 		 // Dispatch request
 		 RequestDispatcher dispatcher = request.getRequestDispatcher("claim.jsp");
 			 dispatcher.forward(request, response);
 		}
-	
+				
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 * This function is not implemented - redirects to doGet method.
@@ -208,21 +210,45 @@ public class ReceiptServlet extends HttpServlet {
 		 
 		 return diffInDays;
 	 }
-
+ 
 	 /**
 	  * Function to calculate reimbursement value given amount of days entered by the user
 	  * and value of daily allowance. Function checks for incorrect input of days and assumes
 	  * 0 if it is the case. Number of days also has to match the length of the trip. If it
-	  * is higher - maximum length of the trip is assumed.
+	  * is higher - maximum length of the trip is assumed. Function adds to sum until maximum
+	  * value of days x allowance is reached.
+	  * 
 	  * @param request - HttpServletRequest parameter
 	  * @param reimbursementList - List of Reimbursement objects
 	  * @param diffInDays - duration of the trip
-	  * @return
+	  * @return Array of two BigDecimals containing spent money and total spent money
 	  */
-	 private BigDecimal calculateAllowance(HttpServletRequest request, List<Reimbursement> reimbursementList, long diffInDays) {
+	 private BigDecimal[] calculateAllowance(HttpServletRequest request, List<Reimbursement> reimbursementList,
+			 long diffInDays) {
+		 
 		 /*
-		  * Get user input
-		 */
+		  * Get daily allowance sum already spent
+		  */
+		 BigDecimal[] rtn = new BigDecimal[2];
+		 String spentRead = request.getParameter("spentSum");
+		 BigDecimal spentSum;
+		 try {
+			 spentSum = new BigDecimal(Double.parseDouble(spentRead)).setScale(2, RoundingMode.HALF_UP);
+		 }
+		 catch (Exception e)
+		 {
+			 spentSum = new BigDecimal(0);
+		 }
+		 
+		 /*
+		  * Calculate amount user has left to claim for
+		  */
+		 BigDecimal max = reimbursementList.get(0).getWorkValue().multiply(new BigDecimal(diffInDays));
+		 BigDecimal available = max.subtract(spentSum);
+		 
+		 /*
+		  * Get amount of days user applies for
+		  */
 		 BigDecimal dailyAllowance = reimbursementList.get(0).getWorkValue();
 		 String nod = request.getParameter("numberOfDays");
 		 BigDecimal calculatedAllowance;
@@ -238,7 +264,7 @@ public class ReceiptServlet extends HttpServlet {
 		 {
 			 numberOfDays = new BigDecimal(0);
 		 }
-
+		 	 
 		 /*
 		  * Check duration of the trip
 		 */
@@ -249,21 +275,27 @@ public class ReceiptServlet extends HttpServlet {
 		 }
 		 
 		 /*
-		  * Calculate reimbursement value. Check if its higher than maximum.
-		  * If it is, assume max instead.
+		  * Calculate reimbursement value entered by the user. Check if its higher than maximum.
+		  * If it is, assume max instead. If max is reached, zero is added.
 		 */
-		 calculatedAllowance = dailyAllowance.multiply(numberOfDays);
-		 BigDecimal maxAllowance = reimbursementList.get(0).getMaxValue();
-		 if (calculatedAllowance.compareTo(maxAllowance) > 0) {
-			 calculatedAllowance = maxAllowance;
+		 	 
+		 calculatedAllowance = dailyAllowance.multiply(numberOfDays);	
+
+		 if (calculatedAllowance.compareTo(available) > 0) {
+			 calculatedAllowance = available;
 		 }
 		 
-		 /*
-		  * Update maximum reimbursement for this type accordingly
-		 */
-		 reimbursementList.get(0).setMaxValue(maxAllowance.subtract(calculatedAllowance));
+		 available = available.subtract(calculatedAllowance);
 		 
-		 return calculatedAllowance;
+		 /*
+		  * Update maximum reimbursement accordingly
+		 */
+		 reimbursementList.get(0).setMaxValue(available);
+		 spentSum = spentSum.add(calculatedAllowance);
+		 rtn[0] = calculatedAllowance;
+		 rtn[1] = spentSum;
+		 
+		 return rtn;
 	 }
 
 	 /**

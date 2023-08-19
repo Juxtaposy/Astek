@@ -21,11 +21,12 @@
 		
 		
 			<form action="ReceiptServlet" method="POST">
+				<input type="hidden" name="spentSum" value="<%= request.getAttribute("spentSum") %>">
 				<label for="tripstartdate">Trip date</label><br><br>
-				From: <input type="date" name="inputDateStart" value="<%= request.getAttribute("inputDateStart") %>">
-				To: <input type="date" name="inputDateEnd" value="<%= request.getAttribute("inputDateEnd") %>">
+				From: <input type="date" name="inputDateStart" value="<%= request.getAttribute("inputDateStart") %>" required>
+				To: <input type="date" name="inputDateEnd" value="<%= request.getAttribute("inputDateEnd") %>" required>
 			 	<br><br><br>
-			
+
 				<label for="receipt">Choose a Receipt Type</label>
 					
 				<select name="select">
@@ -48,7 +49,7 @@
 				<%
 				ArrayList<Reimbursement> reimbursementList = (ArrayList<Reimbursement>)request.getAttribute("reimbursementList");
 				%>
-				Daily allowance (<%= reimbursementList.get(0).getWorkValue() %>$/day max <%= reimbursementList.get(0).getMaxValue() %>$) <br><br>
+				Daily allowance (<%= reimbursementList.get(0).getWorkValue() %>$/day) <br><br>
 				<label for="noofdays">Number of days</label>
 				<input type="number" min="0" placeholder="0" name="numberOfDays">
 				<input type="submit" value="Add">
