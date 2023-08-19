@@ -8,7 +8,7 @@
 		
 		<link href="styles.css" rel="stylesheet" type="text/css">
 		
-		<%@ include file="title.jsp" %>
+		<%@ include file="title.jsp" %> 
 	</head>
 		
 	<body>
